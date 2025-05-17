@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Enviar Serviços</title>
+</head>
+<body>
+  <h1>Cadastro de Serviços no CrudCrud</h1>
+  <button onclick="enviarServicos()">Enviar Serviços</button>
+
+  <script>
+    const API_URL = "https://crudcrud.com/api/3c099a7e32614c5290d9bd7fd7b11f81/servicos"; 
+
+    const servicos = [
+      { nome: "Banho e Tosa" },
+      { nome: "Cuidados Veterinários" },
+      { nome: "Adestramento" },
+      { nome: "Adoção" },
+      { nome: "Hospedagem" },
+      { nome: "Dog Walker" },
+      { nome: "Spa para Pets" }
+    ];
+
+    async function enviarServicos() {
+      for (const servico of servicos) {
+        try {
+          const resposta = await fetch(API_URL, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json"
+            },
+            body: JSON.stringify(servico)
+          });
+
+          if (!resposta.ok) {
+            throw new Error(`Erro ao enviar: ${resposta.status}`);
+          }
+
+          console.log(`Serviço "${servico.nome}" enviado!`);
+        } catch (erro) {
+          console.error("Erro ao enviar:", erro);
+        }
+      }
+
+      alert("Todos os serviços foram enviados!");
+    }
+  </script>
+</body>
+</html>

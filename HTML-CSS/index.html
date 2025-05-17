@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>AuMiaus - Serviços</title>
+  <!-- Linka o arquivo de estilos externo -->
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <!-- Cabeçalho da página com o nome do pet shop e imagem -->
+  <header>
+    <div class="logo-titulo">
+      <img src="AuMiau.png" alt="Logo AuMiaus">
+      <div>
+        <h1>Pet Shop AuMiaus</h1>
+        <p>Carinho, cuidado e diversão para seu pet!</p>
+      </div>
+    </div>
+  </header>
+
+  <!-- Imagem de destaque -->
+  <div class="imagem-destaque">
+    <img src="cachorro-feliz.png" alt="Imagem cachorro feliz"> 
+  </div>
+
+  <!-- Seção onde os serviços serão listados -->
+  <section>
+    <h2>Serviços Disponíveis</h2>
+    <ul id="lista-servicos">
+      <!-- Lista de serviços gerada dinamicamente com JavaScript -->
+    </ul>
+  </section>
+
+  <script>
+    // URL da API do crudcrud (substitua pelo seu token real)
+    const API_URL = "https://crudcrud.com/api/3c099a7e32614c5290d9bd7fd7b11f81/servicos";
+
+    // Função para carregar os serviços da API
+    async function carregarServicos() {
+      try {
+        // Faz a requisição GET para a API para buscar os dados armazenados
+        const resposta = await fetch(API_URL);
+
+        // Converte a resposta da API para JSON (lista de objetos)
+        const dados = await resposta.json();
+
+        // Seleciona o elemento <ul> onde os serviços serão inseridos
+        const lista = document.getElementById("lista-servicos");
+
+        // Limpa qualquer conteúdo existente na lista antes de atualizar
+        lista.innerHTML = "";
+
+        // Para cada serviço retornado pela API, cria um item na lista
+        dados.forEach(servico => {
+          // Cria um novo elemento de lista (li)
+          const li = document.createElement("li");
+
+          // Define o conteúdo de texto com o nome do serviço
+          li.textContent = servico.nome;
+
+          // Adiciona o elemento <li> à lista <ul>
+          lista.appendChild(li);
+
+          // Faz o item aparecer suavemente
+          setTimeout(() => {
+            li.style.transition = "opacity 0.5s";
+            li.style.opacity = 1;
+          }, 50);
+        });
+
+      } catch (erro) {
+        // Caso ocorra algum erro na requisição, exibe no console
+        console.error("Erro ao carregar serviços:", erro);
+      }
+    }
+
+    // Chama a função para carregar os serviços assim que a página for carregada
+    window.onload = carregarServicos;
+  </script>
+</body>
+</html>
